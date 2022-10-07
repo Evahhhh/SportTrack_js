@@ -2,13 +2,23 @@ var db = require('../sqlite_connection.js');
 
 var UserDAO = function(){
     
-    this.insert = function(values){
+    this.insert = function(user, values){
         return new Promise((resolve, reject) => {
-            db.run('INSERT INTO User (lName, fName, birthDate, gender, size, weight, email, password) VALUES (?,?,?,?,?,?,?,?)', values, (err, row) => {
+            db.run('INSERT INTO User (lName, fName, birthDate, gender, size, weight, email, password) VALUES (?,?,?,?,?,?,?,?)', values, (err) => {
                 if (err) {
                     reject(err); 
-                } else {
-                    resolve(row);
+                } else {                    
+                    //change the id by the database one
+                    //have the idUser in the database
+                    db.get('SELECT idUser FROM User WHERE email = ?', [values[6]],(err, row) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            //change
+                            user.setId(row.idUser);
+                            resolve(user);
+                        }
+                    });
                 }
             });
         });
@@ -16,11 +26,11 @@ var UserDAO = function(){
     
     this.update = function(key, values){
         return new Promise((resolve, reject) => {
-            db.run('UPDATE User SET lName = ?, fName = ?, birthDate = ?, gender = ? , size = ?, weight = ?, email = ?, password = ? WHERE id = ?', values, key, (err, row) => {
+            db.run('UPDATE User SET lName = ?, fName = ?, birthDate = ?, gender = ? , size = ?, weight = ?, email = ?, password = ? WHERE idUser = ?', [...values, key], (err, row) => {
                 if (err) {
                     reject(err); 
                 } else {
-                    resolve(row);
+                    resolve("User updated");
                 }
             });
         });
@@ -28,7 +38,7 @@ var UserDAO = function(){
     
     this.delete = function(key){
         return new Promise((resolve, reject) => {
-            db.run('DELETE FROM User WHERE id = ?',key, (err, row) => {
+            db.run('DELETE FROM User WHERE idUser = ?',key, (err, row) => {
                 if (err) {
                     reject(err); 
                 } else {
@@ -64,7 +74,7 @@ var UserDAO = function(){
     
     this.findByKey = function(key){
         return new Promise((resolve, reject) => {
-            db.get('SELECT * FROM User WHERE id = ?', key, (err, row) => {
+            db.get('SELECT * FROM User WHERE idUser = ?', key, (err, row) => {
                 if (err) {
                     reject(err);
                 } else {
