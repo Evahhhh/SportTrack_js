@@ -2,38 +2,76 @@ var db = require('../sqlite_connection.js');
 
 var UserDAO = function(){
     
-    this.insert = function(values, callback){
-        db.run('INSERT INTO User (lName, fName, birthDate, gender, size, weight, email, password) VALUES (?,?,?,?,?,?,?,?)', values);
-        callback();
+    this.insert = function(values){
+        return new Promise((resolve, reject) => {
+            db.run('INSERT INTO User (lName, fName, birthDate, gender, size, weight, email, password) VALUES (?,?,?,?,?,?,?,?)', values, (err, row) => {
+                if (err) {
+                    reject(err); 
+                } else {
+                    resolve(row);
+                }
+            });
+        });
     };
     
     this.update = function(key, values){
-        db.run('UPDATE User SET lName = ?, fName = ?, birthDate = ?, gender = ? , size = ?, weight = ?, email = ?, password = ? WHERE id = ?', values, key);
+        return new Promise((resolve, reject) => {
+            db.run('UPDATE User SET lName = ?, fName = ?, birthDate = ?, gender = ? , size = ?, weight = ?, email = ?, password = ? WHERE id = ?', values, key, (err, row) => {
+                if (err) {
+                    reject(err); 
+                } else {
+                    resolve(row);
+                }
+            });
+        });
     };
     
     this.delete = function(key){
-        db.run('DELETE FROM User WHERE id = ?', key);
+        return new Promise((resolve, reject) => {
+            db.run('DELETE FROM User WHERE id = ?',key, (err, row) => {
+                if (err) {
+                    reject(err); 
+                } else {
+                    resolve(row);
+                }
+            });
+        });
     };
 
-    this.deleteAll = function(callback){
-        db.run('DELETE FROM User');
-        callback();   
+    this.deleteAll = function(){
+        return new Promise((resolve, reject) => {
+            db.run('DELETE FROM User', (err, row) => {
+                if (err) {
+                    reject(err); 
+                } else {
+                    resolve(row);
+                }
+            });
+        });
     };
 
     this.findAll = function(){
         return new Promise((resolve, reject) => {
             db.all('SELECT * FROM User', (err, row) => {
                 if (err) {
-                    reject(err); // optional: you might choose to swallow errors.
+                    reject(err); 
                 } else {
-                    resolve(row)
+                    resolve(row);
                 }
             });
         });
     };
     
     this.findByKey = function(key){
-        return db.get('SELECT * FROM User WHERE id = ?', key);
+        return new Promise((resolve, reject) => {
+            db.get('SELECT * FROM User WHERE id = ?', key, (err, row) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(row);
+                }
+            });
+        });
     };
     
 };
