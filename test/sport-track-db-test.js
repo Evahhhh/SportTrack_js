@@ -1,7 +1,9 @@
 const User = require('../model/User');
 const Activity = require('../model/Activity');
+const Data = require('../model/Data');
 var user_dao = require('../sport-track-db/sport-track-db').user_dao;
 var activity_dao = require('../sport-track-db/sport-track-db').activity_dao;
+var activity_entry_dao = require('../sport-track-db/sport-track-db').activity_entry_dao;
 var db = require('../sport-track-db/sport-track-db').db_connection;
 
 
@@ -101,6 +103,7 @@ activity_dao.deleteAll().then(() => {
 
                                 //on enlève l'idUser pour la modification
                                 a3Tab.pop();
+
                                 activity_dao.update(act2.getIdAct(),a3Tab).then(() => {
                                     activity_dao.findAll().then((rows) => {
                                         console.log("Tableau avec 1 activité (Natation modifiée pour Equitation) : " );
@@ -116,6 +119,59 @@ activity_dao.deleteAll().then(() => {
                                                     console.log(rows);
                                                     console.log('-----------------');
                                                 });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
+
+var data1 = new Data();
+var data2 = new Data();
+var data3 = new Data();
+
+data1.init(123, "13:01:00", 144, 1453, 4252, 13, act3.getIdAct());
+data2.init(123, "15:02:00", 150, 1245, 1425, 53, act3.getIdAct());
+
+var d1Tab = data1.toTab();
+var d2Tab = data2.toTab();
+
+activity_entry_dao.deleteAll().then(() => {
+    activity_entry_dao.findAll().then((rows) => {
+        console.log("Tableau vide : ");
+        console.log(rows);
+        console.log('-----------------');
+        activity_entry_dao.insert(data1,d1Tab).then(() => {
+            activity_entry_dao.insert(data2,d2Tab).then(() => {
+                activity_entry_dao.findAll().then((rows) => {
+                    console.log("Tableau avec 2 données : ");
+                    console.log(rows);
+                    console.log('-----------------');
+                    activity_entry_dao.delete(data1.getIdData()).then(() => {
+                        activity_entry_dao.findAll().then((rows) => {
+                            console.log("Tableau avec 1 donnée (D1 supprimée) : ");
+                            console.log(rows);
+                            console.log('-----------------');
+                            activity_entry_dao.update(data2.getIdData(),d1Tab).then(() => {
+                                activity_entry_dao.findAll().then((rows) => {
+                                    console.log("Tableau avec 1 donnée (D2 modifiée pour D1) : " );
+                                    console.log(rows);
+                                    console.log('-----------------');
+                                    activity_entry_dao.findById(data2.getIdData()).then((row) => {   
+                                        console.log("Donnée avec l'id " + data2.getIdData() +" : "); 
+                                        console.log(row);
+                                        console.log('-----------------');
+                                        activity_entry_dao.deleteAll().then(() => {
+                                            activity_entry_dao.findAll().then((rows) => {
+                                                console.log("Tableau vide : ");
+                                                console.log(rows);
+                                                console.log('-----------------');
                                             });
                                         });
                                     });
