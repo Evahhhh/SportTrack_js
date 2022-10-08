@@ -1,0 +1,24 @@
+html
+    head
+        title= title
+    body
+        table(border='1')
+            thead
+                tr
+                    th Nom
+                    th Prénom
+                    th Date de naissance
+                    th Genre
+                    th Taille
+                    th Poids
+                    th Email
+            tbody
+                each val in users
+                    tr
+                    td= val.lName
+                    td= val.fName
+                    td= val.birthDate
+                    td= val.gender
+                    td= val.size
+                    td= val.weight
+                    td= val.email
