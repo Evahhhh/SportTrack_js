@@ -83,6 +83,18 @@ var UserDAO = function(){
             });
         });
     };
+
+    this.findByEmail = function(email){
+        return new Promise((resolve, reject) => {
+            db.get('SELECT * FROM User WHERE email = ?', email, (err, row) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(row);
+                }
+            });
+        });
+    };
     
 };
 
