@@ -2,23 +2,43 @@ html
     head
         title= title
     body
-        table(border='1')
-            thead
-                tr
-                    th Nom
-                    th Prénom
-                    th Date de naissance
-                    th Genre
-                    th Taille
-                    th Poids
-                    th Email
-            tbody
-                each val in users
-                    tr
-                    td= val.lName
-                    td= val.fName
-                    td= val.birthDate
-                    td= val.gender
-                    td= val.size
-                    td= val.weight
-                    td= val.email
+        form(#form action="/users" method="post")
+        
+            label 
+                input(type='text' name="nom" pattern="^\S+$" id="nom" required)
+                | Nom : 
+
+            label
+                input(type='text' name="prenom" pattern="^\S+$" id="prenom" required)
+                | Prénom :
+
+            label
+                input(type='date' name="datenaiss" id="datenaiss" required)
+                | Date de naissance :
+
+            p  Genre :
+            label
+                input(type='radio' name="sexe" id="M" required)
+                | Masculin
+                input(type='radio' name="sexe" id="F" required)
+                | Féminin
+                input(type='radio' name="sexe" id="NB" required)
+                | Non binaire
+
+            label
+                input(type='number' name="taille" id="taille" required)
+                | Taille :
+
+            label
+                input(type='number' name="poids" id="poids" required)
+                | Poids :
+
+            label
+                input(type='email' name="mail" id="mail" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}" required)
+                | Adresse électronique : :
+
+            label
+                input(type="password" id="mdp" name="mdp" minlength="8" required)
+                | Mot de passe :
+
+            input(type="submit" value="Créer mon compte")
