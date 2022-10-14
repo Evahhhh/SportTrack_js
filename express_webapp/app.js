@@ -34,8 +34,6 @@ app.use(
   })
 );
 app.use(fileUpload({
-  useTempFiles : true,
-  tempFileDir : '/tmp/'
 }));
 
 app.use("/", indexRouter);
