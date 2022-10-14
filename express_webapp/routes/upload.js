@@ -1,4 +1,9 @@
 var express = require("express");
+//lecture du fichier
+const fs = require('fs');
+const formidable = require('formidable');
+const app = express();
+
 var router = express.Router();
 const User = require('../model/User');
 var user_dao = require("../sport-track-db/sport-track-db").user_dao;
@@ -9,8 +14,6 @@ var data_dao = require("../sport-track-db/sport-track-db").activity_entry_dao;
 const fonc = require('../calc/fonction.js');
 const obj = require('../calc/objet.js');
 const objbis = require('../calc/objetbis.js');
-//lecture du fichier
-const fs = require('fs');
 
 
 router.get("/", function (req, res, next) {
@@ -19,10 +22,27 @@ router.get("/", function (req, res, next) {
 
 router.post("/", function (req, res, next) {
     try{
-        console.log(typeof(req.files.activites.name));
-        let fichier = fs.readFileSync("./" + req.files.activites.name);
-        console.log("hey")
-        let act = JSON.parse(fichier)
+        
+        if(req.url == '/' + req.files.activites.name){
+            var form = new formidable.IncomingForm();
+            form.parse(req, function (err, fields, files) {
+                res.write('File uploaded');
+                res.end();
+            });
+        }else{
+            res.render("error", {
+                message: "Le fichier n'a pas été uploadé",
+                error: { status: 500, stack: "Le fichier n'a pas été uploadé" },
+            });
+        }
+
+
+
+
+        // console.log(typeof(req.files.activites.name));
+        // let fichier = fs.readFileSync("./" + req.files.activites.name);
+        // console.log("hey")
+        // let act = JSON.parse(fichier)
 
 
         // if(isset($_FILES["activites"])){
