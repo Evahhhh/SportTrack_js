@@ -32,8 +32,13 @@ router.post("/", (req, res, next) => {
         return;
       }
       res.json({ fields, files });
+      console.log("aaaahh")
+      console.log(fields);
+      console.log(files)
+      console.log("prèèèys")
     });
     console.log("hey");
+
   } catch (error) {
     console.error(error);
     res.render("error", {
@@ -145,14 +150,14 @@ router.post("/", (req, res, next) => {
 
 });
 
-function opt(){}
+// function opt(){}
 
-opt.prototype.dataSauv(time,cFreq,latitude,longitude,altitude)= function(){
-    dataArray.push(time,cFreq,latitude,longitude,altitude);
-}
+// opt.prototype.dataSauv(time,cFreq,latitude,longitude,altitude)= function(){
+//     dataArray.push(time,cFreq,latitude,longitude,altitude);
+// }
 
-opt.prototype.initArray()= function(){
-    dataArray = new Array();
-}
+// opt.prototype.initArray()= function(){
+//     dataArray = new Array();
+// }
 
 module.exports = router;
