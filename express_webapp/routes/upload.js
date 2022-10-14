@@ -19,11 +19,7 @@ router.get("/", (req, res) => {
     res.render("upload", { title: "Importer un fichier" });
 });
 
-router.post("/upload", (req, res, next) => {
-    // console.log("hey")
-    // try{
-        // console.log("salut")
-        // console.log(req.file, req.body);
+app.post("/upload", (req, res, next) => {
     try{
         console.log("hey1")
         const form = formidable({ multiples: true });
