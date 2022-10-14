@@ -9,6 +9,7 @@ var indexRouter = require("./routes/index");
 //ajout
 var usersRouter = require("./routes/users"); //Le fichier routes/users.js sera appelé pour traiter la requête http://localhost:3000/users.
 var connectRouter = require("./routes/connect");
+var uploadRouter = require("./routes/upload");
 var app = express();
 
 // view engine setup
@@ -36,6 +37,7 @@ app.use("/", indexRouter);
 //ajout
 app.use("/users", usersRouter);
 app.use("/connect", connectRouter);
+app.use("/upload", uploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
