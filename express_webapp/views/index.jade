@@ -3,3 +3,10 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  if sessionId
+    a(href="/connect/disconnect")
+      button(type="button") Se déconnnecter
+  else
+    a(href="/connect")
+        button(type="button") Se connnecter

@@ -95,6 +95,18 @@ var UserDAO = function(){
             });
         });
     };
+
+    this.connect = function(email, mdp){
+        return new Promise((resolve, reject) => {
+            db.get('SELECT idUser FROM User WHERE email = ? AND password = ? ', [email, mdp], (err, row) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(row);
+                }
+            });
+        });
+    };
     
 };
 

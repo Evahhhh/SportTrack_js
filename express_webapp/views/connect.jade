@@ -1,0 +1,16 @@
+html
+    head
+        title= title
+    body
+        form(action="/connect", method="post")        
+            label Email : 
+            br
+            input(type='text', name="mail",  id="mail", required)
+            br
+            br
+            label Mot de passe : 
+            br
+            input(type='password', name="mdp", id="mdp", required)
+            br
+            br
+            input(type="submit", value="Se connecter")
