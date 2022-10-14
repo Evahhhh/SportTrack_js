@@ -24,7 +24,7 @@ router.post("/", (req, res, next) => {
   console.log(req.url);
   try {
           
-    console.log(req.files.activites.data)
+    console.log(JSON.parse(req.files.activites.data))
 
     const form = formidable({ multiples: true });
     console.log("hey1");
