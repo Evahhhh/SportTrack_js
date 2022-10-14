@@ -1,5 +1,6 @@
 var createError = require("http-errors");
 var path = require("path");
+var fileUpload = require("express-fileupload");
 var express = require("express");
 var cookieParser = require("cookie-parser");
 const session = require("express-session");
@@ -32,6 +33,10 @@ app.use(
     },
   })
 );
+app.use(fileUpload({
+  useTempFiles : true,
+  tempFileDir : '/tmp/'
+}));
 
 app.use("/", indexRouter);
 //ajout

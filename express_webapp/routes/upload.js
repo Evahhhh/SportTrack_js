@@ -9,16 +9,20 @@ var data_dao = require("../sport-track-db/sport-track-db").activity_entry_dao;
 const fonc = require('../calc/fonction.js');
 const obj = require('../calc/objet.js');
 const objbis = require('../calc/objetbis.js');
+//lecture du fichier
+const fs = require('fs');
 
 
 router.get("/", function (req, res, next) {
     res.render("upload", { title: "Importer un fichier" });
 });
 
-// router.post("/", function (req, res, next) {
-    // try{
-
-
+router.post("/", function (req, res, next) {
+    try{
+        console.log(typeof(req.files.activites.name));
+        let fichier = fs.readFileSync("./" + req.files.activites.name);
+        console.log("hey")
+        let act = JSON.parse(fichier)
 
 
         // if(isset($_FILES["activites"])){
@@ -107,13 +111,14 @@ router.get("/", function (req, res, next) {
         //     echo realpath($_FILES["file"]["tmp_name"]);
         //     }
 
-    // }catch(error){
-    //     res.render("error", {
-    //         message: "Une erreur est survenue",
-    //         error: { status: 500, stack: "Veuillez réessayer" },
-    //     });
-    // }
-// });
+    }catch(error){
+        console.log(error);
+        res.render("error", {
+            message: "Une erreur est survenue",
+            error: { status: 500, stack: "Veuillez réessayer" },
+        });
+    }
+});
 
 // private function dataSauv($time,$cFreq,$latitude,$longitude,$altitude){
 //     array_push($this->dataArray,$time,$cFreq,$latitude,$longitude,$altitude);
