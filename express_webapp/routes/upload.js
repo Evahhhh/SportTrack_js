@@ -1,25 +1,24 @@
 var express = require("express");
 //lecture du fichier
 const formidable = import('formidable')
-const app = express();
-
 var router = express.Router();
+//model
 const User = require('../model/User');
-var user_dao = require("../sport-track-db/sport-track-db").user_dao;
 const Activity = require('../model/Activity');
-var activity_dao = require("../sport-track-db/sport-track-db").activity_dao;
 const Data = require('../model/Data');
+//DAO
+var user_dao = require("../sport-track-db/sport-track-db").user_dao;
+var activity_dao = require("../sport-track-db/sport-track-db").activity_dao;
 var data_dao = require("../sport-track-db/sport-track-db").activity_entry_dao;
-const fonc = require('../calc/fonction.js');
-const obj = require('../calc/objet.js');
-const objbis = require('../calc/objetbis.js');
+//calculs
+const calc = require('../calc/objet.js');
 
 
 router.get("/", (req, res) => {
     res.render("upload", { title: "Importer un fichier" });
 });
 
-app.post("/upload", (req, res, next) => {
+router.post("/", function (req, res, next){
     try{
         console.log("hey1")
         const form = formidable({ multiples: true });
@@ -40,28 +39,11 @@ app.post("/upload", (req, res, next) => {
         res.render('error', {message: "Erreur lors de l'importation du fichier", error: {status: 500, stack: "Erreur lors de l'importation du fichier"}});
     }
 
-    
-        
-        // if(req.url == '/' + req.files.activites.name){
-        //     var form = new formidable.IncomingForm();
-        //     form.parse(req, function (err, fields, files) {
-        //         res.write('File uploaded');
-        //         res.end();
-        //     });
-        // }else{
-        //     res.render("error", {
-        //         message: "Le fichier n'a pas été uploadé",
-        //         error: { status: 500, stack: "Le fichier n'a pas été uploadé" },
-        //     });
-        // }
 
 
+        //PHPHPHPHPHPHPHPHP
 
 
-        // console.log(typeof(req.files.activites.name));
-        // let fichier = fs.readFileSync("./" + req.files.activites.name);
-        // console.log("hey")
-        // let act = JSON.parse(fichier)
 
 
         // if(isset($_FILES["activites"])){
@@ -70,13 +52,15 @@ app.post("/upload", (req, res, next) => {
         //     $json_data = json_decode($FileData,true);
 
         //     //rentrer les données du json dans la bdd
-        //     $act = new Activities();
-        //     $this->initArray();
-            
-        //     foreach ($json_data as $key => $value) {      //$key = activité ou data $value = tableau des attributs
-        //         if($key == "activity"){                  
-        //             $date = $value["date"];                   //récupérer la date de l'activité
-        //             $desc = $value["description"];            //récupérer la description de l'activité
+        //     var act = new Activity();
+        //     this.initArray();
+
+        //     json_data.forEach((element) => {
+
+        //     foreach (json_data as key => value) {      //$key = activité ou data $value = tableau des attributs
+        //         if(key == "activity"){                  
+        //             date = value["date"];                   //récupérer la date de l'activité
+        //             desc = value["description"];            //récupérer la description de l'activité
                     
         //         }elseif ($key == "data"){     
         //             foreach($value as $k => $v){          //$k = une donnée $v = tableau des attribut pour chaque donnée
@@ -150,21 +134,22 @@ app.post("/upload", (req, res, next) => {
         //     echo realpath($_FILES["file"]["tmp_name"]);
         //     }
 
-    // }catch(error){
-    //     console.log(error);
-    //     res.render("error", {
-    //         message: "Une erreur est survenue",
-    //         error: { status: 500, stack: "Veuillez réessayer" },
-    //     });
-    // }
+
+
+
+//PHPHPHPHPHPHPHPHP
+
+
 });
 
-// private function dataSauv($time,$cFreq,$latitude,$longitude,$altitude){
-//     array_push($this->dataArray,$time,$cFreq,$latitude,$longitude,$altitude);
-// }
+function opt(){}
 
-// private function initArray(){
-//     $this->dataArray = array();
-// }
+opt.prototype.dataSauv(time,cFreq,latitude,longitude,altitude)= function(){
+    dataArray.push(time,cFreq,latitude,longitude,altitude);
+}
+
+opt.prototype.initArray()= function(){
+    dataArray = new Array();
+}
 
 module.exports = router;

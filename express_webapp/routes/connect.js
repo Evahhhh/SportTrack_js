@@ -17,7 +17,7 @@ router.post("/", function (req, res, next) {
           res.redirect("/");
         } else {
           res.render("error", {
-            message: "Cette email n'existe pas",
+            message: "Le mail ou mot de passe n'est pas correct",
             error: { status: 500, stack: "Veuillez vous créer un compte" },
           });
         }
