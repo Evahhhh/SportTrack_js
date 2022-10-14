@@ -12,7 +12,7 @@ const objbis = require('../calc/objetbis.js');
 
 
 router.get("/", function (req, res, next) {
-    res.render("upload_activity", { title: "Importer un fichier" });
+    res.render("upload", { title: "Importer un fichier" });
 });
 
 // router.post("/", function (req, res, next) {
