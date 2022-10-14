@@ -1,6 +1,8 @@
 var express = require("express");
 //lecture du fichier
-const formidable = import('formidable')
+const formidable = require("formidable");
+const app = express();
+
 var router = express.Router();
 //model
 const User = require('../model/User');
@@ -15,29 +17,30 @@ const calc = require('../calc/objet.js');
 
 
 router.get("/", (req, res) => {
-    res.render("upload", { title: "Importer un fichier" });
+  res.render("upload", { title: "Importer un fichier" });
 });
 
-router.post("/", function (req, res, next){
-    try{
-        console.log("hey1")
-        const form = formidable({ multiples: true });
-        console.log("hey2")
-        form.parse(req((err, fields, files) => {
-            console.log("hey3")
-            if(err){
-                next(err);
-                console.log("heyIF")
-                return;
-            }
-            console.log("hey4")
-            res.json({ fields, files });
-
-        }));
-    }catch(error){
-        console.error(error);
-        res.render('error', {message: "Erreur lors de l'importation du fichier", error: {status: 500, stack: "Erreur lors de l'importation du fichier"}});
-    }
+router.post("/", (req, res, next) => {
+  console.log(req.body);
+  try {
+    const form = formidable({ multiples: true });
+    console.log("hey1");
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        console.log(err);
+        next(err);
+        return;
+      }
+      res.json({ fields, files });
+    });
+    console.log("hey");
+  } catch (error) {
+    console.error(error);
+    res.render("error", {
+      message: "Erreur lors de l'importation du fichier",
+      error: { status: 500, stack: "Erreur lors de l'importation du fichier" },
+    });
+  }
 
 
 
@@ -92,47 +95,47 @@ router.post("/", function (req, res, next){
         //     }
         //     $distTotale = $classCalc->calculDistanceTrajet($parcours);
 
-        //     //récupérer les différentes fréquences cardiaques
-        //     $minVal = 0;
-        //     $maxVal = 2147483647;
-        //     $avgVal = 0;
-        //     $count = 0;
-        //     $add = 0;
+  //     //récupérer les différentes fréquences cardiaques
+  //     $minVal = 0;
+  //     $maxVal = 2147483647;
+  //     $avgVal = 0;
+  //     $count = 0;
+  //     $add = 0;
 
-        //     for ($i = 1; $i < count($this->dataArray); $i = $i + 5) {       //parcourir toutes les fréquences cardiaques
-        //         if($this->dataArray[$i] < $maxVal){
-        //             $maxVal = $this->dataArray[$i];
-        //         }
-        //         if($this->dataArray[$i] > $minVal){
-        //             $minVal = $this->dataArray[$i];
-        //         }
-        //         $add = $add + $this->dataArray[$i];
-        //         $count++;
-        //     }
-        //     $tmp = $minVal;
-        //     $minVal = $maxVal;               //fréquence cardiaque minimum
-        //     $maxVal = $tmp;                  //fréquence cardiaque maximum
-        //     $avgVal = intval($add/$count);   //fréquence cardiaque moyenne
-            
-        //     //init activity
-        //     $act->init(1, $desc, $date, $this->dataArray[0], $duration, $distTotale, $minVal, $avgVal, $maxVal, $_SESSION['idUser']);
-        //     //insert activityDAO
-        //     ActivityDAO::getInstance()->insert($act);
-                            
-        //     for($i = 0; $i < count($this->dataArray); $i = $i + 5){                
-        //         //init data
-        //         $data = new Data();
-        //         $data->init(123,$this->dataArray[$i],$this->dataArray[$i+1], $this->dataArray[$i+3], $this->dataArray[$i+2], $this->dataArray[$i+4], $act->getIdAct());
-            
-        //         //insert activityEntryDAO
-        //         ActivityEntryDAO::getInstance()->insert($data);
-        //     }  
+  //     for ($i = 1; $i < count($this->dataArray); $i = $i + 5) {       //parcourir toutes les fréquences cardiaques
+  //         if($this->dataArray[$i] < $maxVal){
+  //             $maxVal = $this->dataArray[$i];
+  //         }
+  //         if($this->dataArray[$i] > $minVal){
+  //             $minVal = $this->dataArray[$i];
+  //         }
+  //         $add = $add + $this->dataArray[$i];
+  //         $count++;
+  //     }
+  //     $tmp = $minVal;
+  //     $minVal = $maxVal;               //fréquence cardiaque minimum
+  //     $maxVal = $tmp;                  //fréquence cardiaque maximum
+  //     $avgVal = intval($add/$count);   //fréquence cardiaque moyenne
 
-        //     $this->render('upload_valid',[]);
-        //     }
-        //     if(isset($_FILES["file"])){
-        //     echo realpath($_FILES["file"]["tmp_name"]);
-        //     }
+  //     //init activity
+  //     $act->init(1, $desc, $date, $this->dataArray[0], $duration, $distTotale, $minVal, $avgVal, $maxVal, $_SESSION['idUser']);
+  //     //insert activityDAO
+  //     ActivityDAO::getInstance()->insert($act);
+
+  //     for($i = 0; $i < count($this->dataArray); $i = $i + 5){
+  //         //init data
+  //         $data = new Data();
+  //         $data->init(123,$this->dataArray[$i],$this->dataArray[$i+1], $this->dataArray[$i+3], $this->dataArray[$i+2], $this->dataArray[$i+4], $act->getIdAct());
+
+  //         //insert activityEntryDAO
+  //         ActivityEntryDAO::getInstance()->insert($data);
+  //     }
+
+  //     $this->render('upload_valid',[]);
+  //     }
+  //     if(isset($_FILES["file"])){
+  //     echo realpath($_FILES["file"]["tmp_name"]);
+  //     }
 
 
 
