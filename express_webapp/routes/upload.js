@@ -1,7 +1,6 @@
 var express = require("express");
 //lecture du fichier
-const fs = require('fs');
-const formidable = require('formidable');
+const formidable = import('formidable')
 const app = express();
 
 var router = express.Router();
@@ -16,25 +15,49 @@ const obj = require('../calc/objet.js');
 const objbis = require('../calc/objetbis.js');
 
 
-router.get("/", function (req, res, next) {
+router.get("/", (req, res) => {
     res.render("upload", { title: "Importer un fichier" });
 });
 
-router.post("/", function (req, res, next) {
+router.post("/upload", (req, res, next) => {
+    // console.log("hey")
+    // try{
+        // console.log("salut")
+        // console.log(req.file, req.body);
     try{
+        console.log("hey1")
+        const form = formidable({ multiples: true });
+        console.log("hey2")
+        form.parse(req((err, fields, files) => {
+            console.log("hey3")
+            if(err){
+                next(err);
+                console.log("heyIF")
+                return;
+            }
+            console.log("hey4")
+            res.json({ fields, files });
+
+        }));
+    }catch(error){
+        console.error(error);
+        res.render('error', {message: "Erreur lors de l'importation du fichier", error: {status: 500, stack: "Erreur lors de l'importation du fichier"}});
+    }
+
+    
         
-        if(req.url == '/' + req.files.activites.name){
-            var form = new formidable.IncomingForm();
-            form.parse(req, function (err, fields, files) {
-                res.write('File uploaded');
-                res.end();
-            });
-        }else{
-            res.render("error", {
-                message: "Le fichier n'a pas été uploadé",
-                error: { status: 500, stack: "Le fichier n'a pas été uploadé" },
-            });
-        }
+        // if(req.url == '/' + req.files.activites.name){
+        //     var form = new formidable.IncomingForm();
+        //     form.parse(req, function (err, fields, files) {
+        //         res.write('File uploaded');
+        //         res.end();
+        //     });
+        // }else{
+        //     res.render("error", {
+        //         message: "Le fichier n'a pas été uploadé",
+        //         error: { status: 500, stack: "Le fichier n'a pas été uploadé" },
+        //     });
+        // }
 
 
 
@@ -131,13 +154,13 @@ router.post("/", function (req, res, next) {
         //     echo realpath($_FILES["file"]["tmp_name"]);
         //     }
 
-    }catch(error){
-        console.log(error);
-        res.render("error", {
-            message: "Une erreur est survenue",
-            error: { status: 500, stack: "Veuillez réessayer" },
-        });
-    }
+    // }catch(error){
+    //     console.log(error);
+    //     res.render("error", {
+    //         message: "Une erreur est survenue",
+    //         error: { status: 500, stack: "Veuillez réessayer" },
+    //     });
+    // }
 });
 
 // private function dataSauv($time,$cFreq,$latitude,$longitude,$altitude){
