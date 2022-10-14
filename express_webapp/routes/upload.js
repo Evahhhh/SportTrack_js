@@ -21,21 +21,23 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res, next) => {
-  console.log(req.body);
+  console.log(req.url);
   try {
+          
+    console.log(req.files.activites.data)
+
     const form = formidable({ multiples: true });
     console.log("hey1");
     form.parse(req, (err, fields, files) => {
+        console.log("parse")
       if (err) {
         console.log(err);
         next(err);
         return;
       }
       res.json({ fields, files });
-      console.log("aaaahh")
       console.log(fields);
       console.log(files)
-      console.log("prèèèys")
     });
     console.log("hey");
 
