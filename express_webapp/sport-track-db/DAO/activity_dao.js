@@ -3,6 +3,7 @@ var db = require('../sqlite_connection.js');
 var ActivityDAO = function(){
 
     this.insert = function(activity,values){
+        console.log(values)
         return new Promise((resolve, reject) => {
             db.run("INSERT INTO Activities(description, date, startTime, duration, distance ,cardiacFreqMin,cardiacFreqAvg, cardiacFreqMax, idUser) VALUES (?,?,?,?,?,?,?,?,?)", values, (err) => {
                 if (err) {
