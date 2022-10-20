@@ -1,7 +1,7 @@
 var express = require("express");
 const User = require('../model/User');
 var router = express.Router();
-var user_dao = require("../sport-track-db/sport-track-db").user_dao;
+var user_dao = require("sport-track-db").user_dao;
 
 //afficher tous les users de la bdd
 router.get("/", function (req, res, next) {

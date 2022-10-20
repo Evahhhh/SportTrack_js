@@ -4,8 +4,8 @@ var router = express.Router();
 const Activity = require('../model/Activity');
 const Data = require('../model/Data');
 //DAO
-var activity_dao = require("../sport-track-db/sport-track-db").activity_dao;
-var data_dao = require("../sport-track-db/sport-track-db").activity_entry_dao;
+var activity_dao = require("sport-track-db").activity_dao;
+var data_dao = require("sport-track-db").activity_entry_dao;
 //calculs
 const calc = require('../calc/objet.js');
 

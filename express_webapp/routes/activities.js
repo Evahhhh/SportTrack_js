@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 //dao
-var activity_dao = require("../sport-track-db/sport-track-db").activity_dao;
+var activity_dao = require("sport-track-db").activity_dao;
 
 router.get("/", (req, res) => {
     try{
@@ -27,7 +27,6 @@ router.get("/", (req, res) => {
                     } 
                     acts.push(data);
                 });
-                console.log(acts)
                 res.render('list_activities',{title: 'Liste des activités',acts : acts});
             });
         }else{
